@@ -9,6 +9,7 @@ Typescript provides all of JS Features along with:
   - interfaces
   - decorators (like annotations)
 
+<hr>
 
 ## Hello World!
 
@@ -50,6 +51,8 @@ error TS2554: Expected 2 arguments, but got 1
 but still generates the js regardless.
 
 To enable strict checking, use `--noEmitOnError` option during compilation.
+
+<hr>
 
 
 ## Specifying types:
@@ -97,7 +100,7 @@ let month: string = bd[1];
 
 ```
 
-### Enums:
+#### Enums:
 ```
 enum Color {R=1, G, B};
 
@@ -136,3 +139,105 @@ We can also specify alternate types for a variable using the ***Union operator**
 ```js
 let city: string | null
 ```
+
+<hr>
+
+
+## Functions:
+
+Types of functions and return types can be specified as:
+```js
+function calculate(
+  num1: number,
+  num2: number = 2,
+  calc: boolean
+) : number
+```
+
+> typeof operator can be used to check the type
+
+> Example: `typeof num1`
+
+
+> PS: Return type need not be specified, it can be implicitly inferred
+
+To skip passing a value, and use the default value, `undefined` can be used.
+
+#### Optional Parameter:
+```js
+function calculate(
+  num1: number,
+  num2: number = 2,
+  calc?: boolean
+) : number
+```
+
+Here `calc` is an optional parameter. The `?` indicates that the param is optional.
+
+If it is not passed, it is `undefined`.
+
+
+
+#### Variadic parameters:
+
+```js
+function getNames(fname: string, ...otherNames: string[])
+```
+
+
+#### Lambda expressions (Arrow functions):
+
+```js
+const getFullName = (fn: string, ln:) : string => ``
+```
+
+<hr>
+
+#### Function Overloading:
+
+```js
+// Overload #1
+function secondsToMidnight(secs: number) : number;
+
+// Overload #2
+function secondsToMidnight(h: number, m: number, s: number) : number;
+
+function secondsToMidnight(secsOrH: number, m?: number, s?: number) : number {
+  // One Implementation for both
+}
+```
+
+> PS: JavaScript does not support function overloading.
+
+#### Object parameters:
+
+```js
+function setUser(user: {id: number, name: string}) {}
+```
+
+#### Type Aliases:
+```js
+type User = {
+  id: number;
+  name: string
+}
+
+function serUser(user: User) {}
+```
+
+> Can also be done using interfaces.
+
+
+##### Object destructuring:
+```js
+type User = {
+  id: number;
+  name: string
+}
+
+function setUser({id, name}: User) {}
+```
+
+> We can also assign alias to the properties. example, `function setUser({id, name: n}: User) {}`
+> <br> and then use `n` instead of `name` in the function 
+
