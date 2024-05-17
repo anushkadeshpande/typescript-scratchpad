@@ -241,3 +241,104 @@ function setUser({id, name}: User) {}
 > We can also assign alias to the properties. example, `function setUser({id, name: n}: User) {}`
 > <br> and then use `n` instead of `name` in the function 
 
+<hr>
+
+## Classes:
+
+```js
+class Employee {
+    name: string = '';
+    salary: number = -1;
+}
+```
+
+Each of the fields have to be initialized, else the ts compiler throws an error.
+
+This error can be avoided using `!`. For example,
+```js
+class Employee {
+    name: string!;
+    salary: number = -1;
+}
+```
+This basically means, "Don't worry, this value is definitely initialized later via some mechanism."
+
+A constructor can be used to initialize the fields.
+
+### Encapsulation:
+
+```js
+class Employee {
+    private name: string;
+    private salary: number;
+
+    constructor(name: string, salary: number) {
+      this.name = name;
+      this.salary = salary;
+    }
+}
+```
+
+We can also declare the members like this
+```js
+class Employee {
+
+    constructor(private name: string, private salary: number) {
+      this.name = name;
+      this.salary = salary;
+    }
+}
+```
+
+
+### Defining getters and setters:
+```js
+class Employee {
+
+    constructor(private _name: string, private _salary: number) {}
+
+    get name() {
+      return this._name;
+    }
+
+    set name(newName: string) {
+      this._name = newName;
+    }
+
+    get salary() {
+      return this._salary;
+    }
+}
+```
+
+### Defining readonly properties:
+
+We can initialize it using a constructor, and thereafter, it is frozen.
+
+```js
+class Circle {
+  readonly radius: number;
+
+  constructor(radius: number) {
+    this.radius = radius;
+  }
+}
+```
+
+
+### Static Members:
+
+```js
+class Circle {
+  private radius: number;
+  private static _PI = 3.142;
+
+  constructor(radius: number) {
+    this.radius = radius;
+  }
+
+  static get PI() {
+    return Circle._PI;
+  }
+}
+```
