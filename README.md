@@ -342,3 +342,17 @@ class Circle {
   }
 }
 ```
+<hr> 
+
+## Interfaces and Inheritance:
+
+Under the covers, TS inheritance is transpiled into prototypical inheritance in JS.
+
+Additional techniques in super class:
+- Can be abstract 
+- Can have abstract methods
+- Can have protected methods
+
+Additional techniques in client code:
+- Type checks via `instanceof`
+- Type-casts via  `<type>`
