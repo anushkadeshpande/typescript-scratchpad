@@ -11,6 +11,35 @@ Typescript provides all of JS Features along with:
 
 <hr>
 
+<!-- index-start -->
+## Index
+
+- [Hello World!](#hello-world-)
+- [Specifying types](#specifying-types-)
+    - [Arrays](#arrays-)
+    - [Tuples](#tuples-)
+    - [Enums](#enums-)
+  - [Strictness check](#strictness-check-)
+- [Functions](#functions-)
+    - [Optional Parameter](#optional-parameter-)
+    - [Variadic parameters](#variadic-parameters-)
+    - [Lambda expressions (Arrow functions)](#lambda-expressions-arrow-functions-)
+    - [Function Overloading](#function-overloading-)
+    - [Object parameters](#object-parameters-)
+    - [Type Aliases](#type-aliases-)
+- [Classes](#classes-)
+  - [Encapsulation](#encapsulation-)
+  - [Defining getters and setters](#defining-getters-and-setters-)
+  - [Defining readonly properties](#defining-readonly-properties-)
+  - [Static Members](#static-members-)
+- [Interfaces and Inheritance](#interfaces-and-inheritance-)
+  - [Defining interfaces](#defining-interfaces-)
+  - [Discriminated Union](#discriminated-union-)
+  - [Adding stuff to an existing interface](#adding-stuff-to-an-existing-interface-)
+<!-- index-end -->
+
+
+
 ## Hello World!
 
 ```js
@@ -348,6 +377,8 @@ class Circle {
 
 Under the covers, TS inheritance is transpiled into prototypical inheritance in JS.
 
+A class can extend another class using the `extends` keyword.
+
 Additional techniques in super class:
 - Can be abstract 
 - Can have abstract methods
@@ -355,4 +386,110 @@ Additional techniques in super class:
 
 Additional techniques in client code:
 - Type checks via `instanceof`
-- Type-casts via  `<type>`
+- Type-casts via  `as` and `<type>`. Ex
+  ```js
+  if(a instanceof Cat)
+    let c = a as Cat
+  ```
+
+  OR
+  ```js
+  if(a instanceof Cat)
+    let c = <Cat> a
+  ```
+
+
+> PS: OOP is almost similar to Java
+
+
+### Defining interfaces:
+Example:
+```js
+interface Loggable {
+  log(msg: String) : void;
+}
+
+
+function useLoggableThing(loggable: Loggable) {
+  loggable.log('Hello')
+}
+```
+
+We can also implement an interface in an object literal
+
+Or can implement in a class like Java.
+
+Check this example
+
+```js
+class MyClass {
+  log(msg: string) {
+    console.log("Logging..." + msg)
+  }
+}
+
+useLoggableThing(new MyClass())
+
+
+function useLoggableThing(loggable: Loggable) {
+  loggable.log("Hellooo...")
+}
+```
+
+Here, we're not explicitly implementing the interface. Typescript can figure it out!
+
+> Multiple inheritance is supported by ts/js
+
+### Discriminated Union:
+
+Ex:
+
+```js
+interface FullTimeRemuneration {
+    kind: 'fulltime',
+    annualSalary: number
+}
+
+interface ContractRemuneration {
+    kind: 'contract',
+    dailyRate: number
+}
+
+type Remuneration = FullTimeRemuneration | ContractRemuneration;
+
+function calcEffectiveSalary(r: Remuneration) {
+    if (r.kind === 'fulltime') 
+        return r.annualSalary;      
+    else
+        return r.dailyRate * 240;
+}
+```
+
+
+
+### Adding stuff to an existing interface:
+
+Redefinition of an interface is additive.
+
+So, we can extend an interface without actually modifying the original interface.
+
+```js
+interface MyInterface {
+    a: string
+    f1() : void;
+}
+
+interface MyInterface {
+    b: string
+    f2() : void;
+}
+
+function f(obj: MyInterface) {
+    obj.a;
+    obj.b;
+    obj.f1();
+    obj.f2();
+} 
+```
+
+> An interface can also be extended using the `extends` keyword
